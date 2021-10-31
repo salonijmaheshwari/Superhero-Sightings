@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <title>SuperHero Sighting</title>
+    </head>
+    <body>
+        <!-- Main Body of Page -->
+
+        <div class="container">
+            <div class="row m-4">
+                <div class="col text-center border border-dark">
+                    <h1>SuperHero Sighting</h1>
+                </div>
+            </div>
+            <div class="row m-4 border border-dark">
+                
+                 <div class="col text-center m-3">
+                    <a href="homepage" class="btn btn-outline-primary btn-lg">Home</a>
+                </div>
+                
+                
+                
+                <div class="col text-center m-3">
+                    <a href="superHeroes" class="btn btn-outline-primary btn-lg">SuperHeroes</a>
+                </div>
+                <div class="col text-center m-3">
+                    <a href="superPowers" class="btn btn-outline-primary btn-lg">SuperPowers</a>
+                </div>
+                <div class="col text-center m-3">
+                    <a href="locations" class="btn btn-outline-primary btn-lg">Locations</a>
+                </div>
+                <div class="col text-center m-3">
+                    <a href="organizations" class="btn btn-outline-primary btn-lg">Organizations</a>
+                </div>
+                <div class="col text-center m-3">
+                    <a href="superHeroSightings" class="btn btn-outline-primary btn-lg">SuperHero Sightings</a>
+                </div>
+            </div>
+
+
+            <div class="row m-4 border border-dark">
+                <div class="col-3 text-center m-3">
+                    <span class="h3">Add Organization</span>
+                </div>
+                <div class="col-7 text-center m-3">
+                    <form action="addOrganization" method="POST">
+
+                        <div class="form-group row">
+                            <label for="orgName" class="col-3 col-form-label">
+                                Organization Name</label>
+                            <div class="col-9">
+                                <input type="text" name="orgName" 
+                                       id="orgName" class="form-control" required="required" maxlength="50" minlength="3"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="orgDescription" class="col-3 col-form-label">
+                                   Organization Description</label>
+                            <div class="col-9">
+                                <textarea class="form-control" id="orgDescription"
+                                          name="orgDescription" rows="3" maxlength="255"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="orgContact" class="col-3 col-form-label">
+                                Organization Contact</label>
+                            <div class="col-9">
+                                <input type="text" name="orgContact" 
+                                       id="orgContact" class="form-control" required="required" maxlength="30"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="orgAddress" class="col-3 col-form-label">
+                                   Organization Address</label>
+                            <div class="col-9">
+                                <textarea class="form-control" id="orgAddress"
+                                          name="orgAddress" rows="2" maxlength="100"></textarea>
+                            </div>
+                        </div>
+                                               
+                        
+                        <button type="submit" class="btn btn-primary">Add Organization</button>
+                    </form>
+                </div>
+            </div>
+            
+            
+            
+            <div class="row m-4 border border-dark">
+                <div class="col-3 text-center m-3">
+                    <span class="h3">Get SuperHeroes for an Organization</span>
+                </div>
+                <div class="col-7 text-center m-3">
+                    <form action="heroorganization" method="POST">
+                                                
+                        <div class="form-group row">
+                            <label for="organization" class="col-3 col-form-label">
+                                Organization</label>
+                            <div class="col-9">
+                                <select id="organization" name="orgId" class="form-control" >
+                                  
+                                    <option th:each="organization : ${organizations}" 
+                                            th:value="${organization.orgId}" 
+                                            th:text="${organization.orgName}">
+                                        Organization Name</option>
+                                </select>
+                            </div>
+                        </div>   
+                        <button type="submit" class="btn btn-primary">Get SuperHeros</button>
+                    </form>
+                </div>
+            </div>
+            
+            
+            
+
+
+            <div class="row m-4 border border-dark">
+                <div class="col text-center m-3">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Contact</th>
+                                <th>Address</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="organization : ${organizations}">
+                                <td th:text="${organization.orgId}">ID</td>
+                                <td th:text="${organization.orgName}">Name</td>
+                                <td th:text="${organization.orgDescription}">Description</td>
+                                <td th:text="${organization.orgContact}">Contact</td>
+                                <td th:text="${organization.orgAddress}">Address</td>
+                                <td><a href="#" th:href="@{/editOrganization(id=${organization.orgId})}">Edit</a></td>
+                                <td><a href="#" th:href="@{/deleteOrganization(id=${organization.orgId})}">Delete</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>  
+
+        <!-- End main body -->
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    </body>
+</html>;
+
+
